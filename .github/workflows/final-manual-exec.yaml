@@ -1,0 +1,40 @@
+# CI de Nivel 01 - Disparo manual - Execucao de testes JavaScript com Mocha
+
+# nome do nosso 'pipeline'
+name: 'Execuçao Manual para pipeline de testes JavaScript'
+
+# regras de disparo (gatilhos/triggers)
+# gatilho de exec manual = workflow_dispatch
+
+on:
+  workflow_dispatch:
+
+# trabalhos ou tarefas dentro do pipeline = jobs
+jobs:
+  e2e-tests:
+    #maquina que o job vai executar
+    runs-on: ubuntu-latest
+
+    # passos do script de build (steps)
+    steps:
+      # clone do projeto
+      - uses: actions/checkout@v4
+
+      # instalaçao do node
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      # instalaçao das dependencias
+      - name: Instalando dependencias
+        run: npm install
+
+      # instalaçao dos testes e2e
+      - name: Executando Testes E2E
+        run: npx mocha testes/01-testes.js
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: relatorio
+          path: ./playwright-report
