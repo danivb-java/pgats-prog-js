@@ -1,7 +1,7 @@
 # CI de Nivel 01 - Disparo manual - Execucao de testes JavaScript com Mocha
 
 # nome do nosso 'pipeline'
-name: 'Execuçao Manual para pipeline de testes JavaScript'
+name: 'Execuçao Manual - pipeline de testes JS'
 
 # regras de disparo (gatilhos/triggers)
 # gatilho de exec manual = workflow_dispatch
@@ -29,12 +29,13 @@ jobs:
       - name: Instalando dependencias
         run: npm install
 
-      # instalaçao dos testes e2e
-      - name: Executando Testes E2E
+      # instalaçao dos testes e2e com Mochawesome
+      - name: Executando Testes E2E com Mochawesome
         run: npx mocha testes/01-testes.js
 
+      - name: Upload do Relatório Mochawesome
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: relatorio
-          path: ./playwright-report
+          name: mochawesome-report
+          path: mochawesome-report
