@@ -29,13 +29,6 @@ jobs:
       - name: Instalando dependencias
         run: npm install
 
-      # instalaçao dos testes e2e com Mochawesome
-      - name: Executando Testes E2E com Mochawesome
+      # instalaçao dos testes e2e
+      - name: Executando Testes E2E
         run: npx mocha testes/01-testes.js
-
-      - name: Upload do Relatório Mochawesome
-        uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: mochawesome-report
-          path: mochawesome-report
