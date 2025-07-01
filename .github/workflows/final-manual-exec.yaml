@@ -34,7 +34,7 @@ jobs:
         run: npx mocha testes/01-testes.js
 
       - name: Upload do Relatório Mochawesome
-      - uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: mochawesome-report
